@@ -1,0 +1,64 @@
+{
+    "document": {
+    "nodes": [
+      {
+        "kind": "block",
+        "type": "paragraph",
+        "nodes": [
+          {
+            "kind": "text",
+            "ranges": [
+              {
+                "text": "In addition to block nodes, you can create inline void nodes, like "
+              }
+            ]
+          },
+          {
+            "kind": "inline",
+            "type": "emoji",
+            "isVoid": true,
+            "data": {
+              "code": "😃"
+            }
+          },
+          {
+            "kind": "text",
+            "ranges": [
+              {
+                "text": "!"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "block",
+        "type": "paragraph",
+        "nodes": [
+          {
+            "kind": "inline",
+            "type": "emoji",
+            "isVoid": true,
+            "data": {
+              "code": "🍔"
+            }
+          }
+        ]
+      },
+      {
+        "kind": "block",
+        "type": "paragraph",
+        "nodes": [
+          {
+            "kind": "text",
+            "ranges": [
+              {
+                "text": "This example shows emojis in action."
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -67,6 +67,68 @@ const EXAMPLES = [
   ['DEV:Rich', DevPerformanceRich, '/dev-performance-rich', true],
 ]
 
+class ArtifactFields  extends React.Component {
+    render() {
+        return (
+            <table className="table">
+                <thead>
+                <tr>
+                    <th>Параметр</th>
+                    <th>Значение</th>
+                </tr>
+                </thead>
+                <tbody>
+                {myData.options.map((object,i)=>{
+                    switch(object.type) {
+                        case 'integer':
+                            return (
+                            <tr>
+                                <td className="">{object.title}</td>
+                                <td>
+                                    {object.multiple?(
+                                        object.value.map((val,j)=>{
+                                            let field_name = object.code+"[]"
+                                            return (
+                                                <input type="text" name={field_name} className="form-control" placeholder="Enter value" value={val} />
+                                            )
+                                        })
+                                    ):(
+                                        <input type="text" name={object.code} className="form-control" placeholder="Enter value" value={object.value} />
+                                    )}
+                                </td>
+                            </tr>
+                            )
+                        case 'link':
+                            return(
+                            <tr>
+                                <td className="">{object.title}</td>
+                                <td>
+                                    {object.multiple?(
+                                        object.value.map((val,j)=>{
+                                            let field_name = object.code+"[]"
+                                            return (
+                                                <p>
+                                                    <a href={val.code}>{val.code} - {val.title}</a>
+                                                </p>
+                                            )
+                                        })
+                                    ):(
+                                        <p>
+                                            <a href={object.value.code}>{object.value.code} - {object.value.title}</a>
+                                        </p>
+                                    )}
+                                </td>
+                            </tr>
+                            )
+                    }
+                })}
+                </tbody>
+            </table>
+        )
+    }
+}
+
+
 /**
  * App.
  *
@@ -116,43 +178,7 @@ class App extends React.Component {
                                       </div>
                                       <div className="card-body">
                                           <div className="row">
-                                              <table className="table">
-                                                  <thead>
-                                                  <tr>
-                                                      <th>Параметр</th>
-                                                      <th>Значение</th>
-                                                  </tr>
-                                                  </thead>
-                                                  <tbody>
-                                                  <tr>
-                                                      <td className="">Ответственный</td>
-                                                      <td>
-                                                          <a href="#">PPL-12: Антон Васильев</a>
-                                                          <a href="" className="btn btn-sm btn-danger">Delete</a>
-                                                          <br/>
-                                                          <a href="#">PPL-24: Пётр Петрович</a>
-                                                          <a href="" className="btn btn-sm btn-danger">Delete</a>
-                                                          <br/>
-                                                          <a href="" className="btn btn-sm btn-success">Add</a>
-                                                      </td>
-                                                  </tr>
-                                                  <tr>
-                                                      <td className="">Business Value</td>
-                                                      <td>
-                                                          <input type="text" name="bv" className="form-control" placeholder="Enter value" value="21" />
-                                                      </td>
-                                                  </tr>
-                                                  <tr>
-                                                      <td>На этот документ ссылаются</td>
-                                                      <td>
-                                                          <a href="#">RQ-3: Регистрация пользователей</a>
-                                                          <br/>
-                                                              <a href="#">SRVC-5: newsfeed</a>
-                                                              <br />
-                                                      </td>
-                                                  </tr>
-                                                  </tbody>
-                                              </table>
+                                              <ArtifactFields />
                                           </div>
                                           <div className="row">
                                               <Switch>

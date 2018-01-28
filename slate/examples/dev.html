@@ -1,29 +1,58 @@
+<!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <title>Slate</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,400i,700,700i&subset=latin-ext" >
-  </head>
-  <body>
-    <main></main>
-    <script>
-      // Dynamically creates the script and link tag and adds the current time
-      // in ms as a query on the URL. This ensures the script and the link is
-      // always reloaded.
-      //
-      // Useful during debugging because we want to see changes to the
-      // JavaScript and CSS code immediately.
-      var head = document.getElementsByTagName('head')[0]
-      var script = document.createElement('script')
-      var time = new Date().getTime()
-      script.type = 'text/javascript'
-      script.src = 'build.dev.js?' + time
-      head.appendChild(script)
-      var link = document.createElement('link')
-      link.rel = 'stylesheet'
-      link.href = 'index.css?' + time
-      head.appendChild(link)
-    </script>
-  </body>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css">
+  <link rel="stylesheet" href="index.css" type="text/css">
+</head>
+<body>
+
+<script>
+  const myData = {
+      'options': {
+          "businessvalue": {
+              "type": "integer",
+              "multiple": true,
+              "readonly": false,
+              "title": "Business Value",
+              "value": "22"
+          },
+          "responsing": {
+              "type": "link",
+              "multiple": true,
+              "readonly": false,
+              "title": "Ответственный",
+              "value": [
+                  "PPL-12: Антон Васильев",
+                  "PPL-24: Пётр Петрович"
+              ]
+          },
+          "incoming_links": {
+              "type": "link",
+              "multiple": true,
+              "readonly": true,
+              "title": "На этот документ ссылаются",
+              "value": [
+                  "RQ-3: Регистрация пользователей",
+                  "SRVC-5: newsfeed"
+              ]
+          }
+      },
+      'text': 'Slatus is flexible enough to add **decorators** that can format text based on its content. For example, this editor has **Markdown** preview decorators on it, to make it _dead_ simple to make an editor with built-in Markdown previewing.\n' +
+              '## Try it out!\n' +
+              'Try it out for yourself!'
+  };
+
+
+</script>
+
+<main></main>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+<script src="https://cdn.polyfill.io/v2/polyfill.js?features=es6"></script>
+<script src="build.dev.js"></script>
+</body>
+
 </html>

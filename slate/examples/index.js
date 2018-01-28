@@ -75,36 +75,104 @@ const EXAMPLES = [
 
 class App extends React.Component {
 
-  render() {
-    return (
-      <div className="app">
-        <div className="nav">
-          <span className="nav-title">Slate Examples</span>
-          <div className="nav-links">
-            <a className="nav-link" href="https://github.com/ianstormtaylor/slate">GitHub</a>
-            <a className="nav-link" href="https://docs.slatejs.org/">Docs</a>
-          </div>
-        </div>
-        <div className="tabs">
-          {EXAMPLES.map(([ name, Component, path, isDev ]) => (
-            (NODE_ENV != 'production' || !isDev) && (
-              <NavLink key={path} to={path} className="tab"activeClassName="active">
-                {name}
-              </NavLink>
-            )
-          ))}
-        </div>
-        <div className="example">
-          <Switch>
-            {EXAMPLES.map(([ name, Component, path, isDev ]) => (
-              <Route key={path} path={path} component={Component} />
-            ))}
-            <Redirect from="/" to="/rich-text" />
-          </Switch>
-        </div>
-      </div>
-    )
-  }
+    render() {
+        return (
+            <div className="app">
+                  <nav className="navbar navbar-expand-md bg-primary navbar-dark">
+                      <div className="container">
+                          <a className="navbar-brand" href="#">DocDD</a>
+                          <button className="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbar2SupportedContent" aria-controls="navbar2SupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                              <span className="navbar-toggler-icon"></span>
+                          </button>
+                          <div className="collapse navbar-collapse text-center justify-content-end" id="navbar2SupportedContent">
+                              <ul className="navbar-nav">
+                                  {EXAMPLES.map(([ name, Component, path, isDev ]) => (
+                                      (NODE_ENV != 'production' || !isDev) && (
+                                          <NavLink key={path} to={path} className="nav-item tab nav-link" activeClassName="active">
+                                              <i className="fa d-inline fa-lg fa-bookmark-o"></i>&nbsp;{name}
+                                          </NavLink>
+                                      )
+                                  ))}
+                              </ul>
+                              <a className="btn navbar-btn btn-primary ml-2 text-white"><i className="fa d-inline fa-lg fa-user-circle-o"></i> Sign in</a>
+                          </div>
+                      </div>
+                  </nav>
+                  <div className="py-5">
+                      <div className="container">
+                          <div className="row">
+                              <div className="col-md-12">
+                                  <h1 className="">MOSRU-RQ12 Создание страницы "Новости"</h1>
+                              </div>
+                          </div>
+                          <div className="row">
+                              <div className="col-md-12">
+                                  <div className="card">
+                                      <div className="card-header">
+                                          <div className="row">
+                                              <div className="col-md-10 align-self-center text-right"> Ветка: </div>
+                                              <div className="col-md-2 text-center"><strong> master </strong></div>
+                                          </div>
+                                      </div>
+                                      <div className="card-body">
+                                          <div className="row">
+                                              <table className="table">
+                                                  <thead>
+                                                  <tr>
+                                                      <th>Параметр</th>
+                                                      <th>Значение</th>
+                                                  </tr>
+                                                  </thead>
+                                                  <tbody>
+                                                  <tr>
+                                                      <td className="">Ответственный</td>
+                                                      <td>
+                                                          <a href="#">PPL-12: Антон Васильев</a>
+                                                          <a href="" className="btn btn-sm btn-danger">Delete</a>
+                                                          <br/>
+                                                          <a href="#">PPL-24: Пётр Петрович</a>
+                                                          <a href="" className="btn btn-sm btn-danger">Delete</a>
+                                                          <br/>
+                                                          <a href="" className="btn btn-sm btn-success">Add</a>
+                                                      </td>
+                                                  </tr>
+                                                  <tr>
+                                                      <td className="">Business Value</td>
+                                                      <td>
+                                                          <input type="text" name="bv" className="form-control" placeholder="Enter value" value="21" />
+                                                      </td>
+                                                  </tr>
+                                                  <tr>
+                                                      <td>На этот документ ссылаются</td>
+                                                      <td>
+                                                          <a href="#">RQ-3: Регистрация пользователей</a>
+                                                          <br/>
+                                                              <a href="#">SRVC-5: newsfeed</a>
+                                                              <br />
+                                                      </td>
+                                                  </tr>
+                                                  </tbody>
+                                              </table>
+                                          </div>
+                                          <div className="row">
+                                              <Switch>
+                                                  {EXAMPLES.map(([ name, Component, path, isDev ]) => (
+                                                      <Route key={path} path={path} component={Component} />
+                                                  ))}
+                                                  <Redirect from="/" to="/rich-text" />
+                                              </Switch>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <a className="btn btn-primary btn-lg w-50" href="">Save </a>
+                                  <a className="btn btn-lg w-25 btn-link" href="">Back to list</a>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+            </div>
+        )
+    }
 
 }
 
@@ -120,13 +188,11 @@ const router = <HashRouter><App /></HashRouter>
  * Attach `Perf` when not in production.
  */
 
+/*
 if (NODE_ENV != 'production') {
-  window.Perf = require('react-addons-perf')
-}
-
-/**
- * Mount the router.
+  window.Perf = require('react')
  */
+
 
 const root = document.body.querySelector('main')
 ReactDOM.render(router, root)

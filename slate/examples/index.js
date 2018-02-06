@@ -128,6 +128,10 @@ class AppField extends React.Component {
     }
 }
 
+/**
+ * Link field is a component, showing links between two markdown files.
+ * It is visualized as one or more links. If it is multiple field - we can create or remove values.
+ */
 class LinkField extends AppField {
     /*
     state = {
@@ -155,7 +159,7 @@ class LinkField extends AppField {
             object = data;
 
         return (
-            <p><a href={object.value.code}>{object.value.title}</a></p>
+            <a href={object.value.code}>{object.value.title}</a>
         )
     }
 
@@ -164,7 +168,6 @@ class LinkField extends AppField {
 
         return (
             <span>
-                Calling renderSingleValue() and drawing delete and add buttons
                 {this.state.value.map((val, j) => {
                     let data = {
                         'value': {
@@ -173,7 +176,7 @@ class LinkField extends AppField {
                         }
                     };
                     return (
-                        self.renderSingleValue(data)
+                        <p>{self.renderSingleValue(data)} &nbsp; <span>[del]</span></p>
                     )
                 })}
                 {this.state.addVisible?
@@ -194,6 +197,9 @@ class LinkField extends AppField {
         )
     }
 
+    /**
+     * First step of adding link - is asking user, where do we link
+     */
     addNewValueStep1() {
         let state = this.state;
         state.autocompleteOpen = true;
@@ -203,14 +209,24 @@ class LinkField extends AppField {
         this.setState(state);
     }
 
+    /**
+     * When name changed - we should update state
+     */
     addNewValueStepName(event) {
         this.setState({'autocompleteName':event.target.value})
     }
 
+    /**
+     * When code changed - we should update state
+     */
     addNewValueStepCode(event) {
         this.setState({'autocompleteCode':event.target.value})
     }
 
+    /**
+     * When user filled name and code and clicked "submit" - we should create link.
+     * Also, we should hide our input fields and make cleanup.
+     */
     addNewValueStep2() {
         let state = this.state;
         state.value.push({
@@ -273,65 +289,7 @@ class IntegerField extends AppField {
  */
 
 class App extends React.Component {
-    state = {
-        'options': [
-            {
-                "code": "businessvalue",
-                "type": "integer",
-                "multiple": false,
-                "readonly": false,
-                "title": "!Business Value",
-                "value": "22"
-            },
-            {
-                "code": "chislaz",
-                "type": "integer",
-                "multiple": true,
-                "readonly": false,
-                "title": "chislaz",
-                "value": [
-                    "22", "23", "24"
-                ]
-            },
-            {
-                "code": "responsing",
-                "type": "link",
-                "multiple": true,
-                "readonly": false,
-                "title": "!Ответственный",
-                "value": [
-                    {
-                        "code": "PPL-12",
-                        "title": "Антон Васильев"
-                    },
-                    {
-                        "code": "PPL-24",
-                        "title": "Пётр Петрович"
-                    }
-                ]
-            },
-            {
-                "code": "incoming_links",
-                "type": "link",
-                "multiple": true,
-                "readonly": true,
-                "title": "!На этот документ ссылаются",
-                "value": [
-                    {
-                        "code": "RQ-3",
-                        "title": "Регистрация пользователей"
-                    },
-                    {
-                        "code": "SRVC-5",
-                        "title": "newsfeed"
-                    }
-                ]
-            }
-        ],
-        'text': 'Slatus is flexible enough to add **decorators** that can format text based on its content. For example, this editor has **Markdown** preview decorators on it, to make it _dead_ simple to make an editor with built-in Markdown previewing.\n' +
-        '## Try it out!\n' +
-        'Try it out for yourself!'
-    };
+    state = {};
 
     constructor(props) {
         super(props);
@@ -341,35 +299,28 @@ class App extends React.Component {
         //};
     }
 
-    /**
-     * @todo: CORRECT THIS
-     * @param evt
-     * @returns {boolean}
-     */
-    handleClick = (evt) => {
-        var state = this.state;
-        state.options.push({
-            "code": "some_links",
-            "type": "link",
-            "multiple": true,
-            "readonly": true,
-            "title": "Some links",
-            "value": [
-                {
-                    "code": "SQ-3",
-                    "title": "My little link"
-                },
-                {
-                    "code": "FRND-5",
-                    "title": "Friendship is magic!"
+    componentDidMount(){
+        let url='http://localhost:8080/MOSRU-RQ12.json';
+
+        fetch(url)
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    alert('ERROR HERE');
+                    throw new Error('Something went wrong ...');
                 }
-            ]
-        });
-        this.setState(state);
-        return false;
-    };
+            })
+            .then(data => this.setState(data))
+            .catch(error => function(){alert('OOOOPS')});
+    }
 
     render() {
+        if (!("text" in this.state)) {
+            return (
+                <span />
+            )
+        }
         const self = this;
         return (
             <div className="app">

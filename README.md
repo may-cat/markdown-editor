@@ -6,6 +6,8 @@ yarn run watch
 - Заходим
 http://localhost:8080/dev.html#/requirements
 
+Сейчас используется статика в /slate/examples/
+
 # Туду
 
 - Я как пользователь хочу иметь аналог GitBook-а с улучшенным отображением свойств файла

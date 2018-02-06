@@ -67,68 +67,6 @@ const EXAMPLES = [
   ['DEV:Rich', DevPerformanceRich, '/dev-performance-rich', true],
 ]
 
-class ArtifactFields  extends React.Component {
-    render() {
-        return (
-            <table className="table">
-                <thead>
-                <tr>
-                    <th>Параметр</th>
-                    <th>Значение</th>
-                </tr>
-                </thead>
-                <tbody>
-                {myData.options.map((object,i)=>{
-                    switch(object.type) {
-                        case 'integer':
-                            return (
-                            <tr>
-                                <td className="">{object.title}</td>
-                                <td>
-                                    {object.multiple?(
-                                        object.value.map((val,j)=>{
-                                            let field_name = object.code+"[]"
-                                            return (
-                                                <input type="text" name={field_name} className="form-control" placeholder="Enter value" value={val} />
-                                            )
-                                        })
-                                    ):(
-                                        <input type="text" name={object.code} className="form-control" placeholder="Enter value" value={object.value} />
-                                    )}
-                                </td>
-                            </tr>
-                            )
-                        case 'link':
-                            return(
-                            <tr>
-                                <td className="">{object.title}</td>
-                                <td>
-                                    {object.multiple?(
-                                        object.value.map((val,j)=>{
-                                            let field_name = object.code+"[]"
-                                            return (
-                                                <p>
-                                                    <a href={val.code}>{val.code} - {val.title}</a>
-                                                </p>
-                                            )
-                                        })
-                                    ):(
-                                        <p>
-                                            <a href={object.value.code}>{object.value.code} - {object.value.title}</a>
-                                        </p>
-                                    )}
-                                </td>
-                            </tr>
-                            )
-                    }
-                })}
-                </tbody>
-            </table>
-        )
-    }
-}
-
-
 /**
  * App.
  *
@@ -136,8 +74,98 @@ class ArtifactFields  extends React.Component {
  */
 
 class App extends React.Component {
+    state = {
+        'options': [
+            {
+                "code": "businessvalue",
+                "type": "integer",
+                "multiple": false,
+                "readonly": false,
+                "title": "!Business Value",
+                "value": "22"
+            },
+            {
+                "code": "chislaz",
+                "type": "integer",
+                "multiple": true,
+                "readonly": false,
+                "title": "chislaz",
+                "value": [
+                    "22","23","24"
+                ]
+            },
+            {
+                "code": "responsing",
+                "type": "link",
+                "multiple": true,
+                "readonly": false,
+                "title": "!Ответственный",
+                "value": [
+                    {
+                        "code": "PPL-12",
+                        "title": "Антон Васильев"
+                    },
+                    {
+                        "code": "PPL-24",
+                        "title": "Пётр Петрович"
+                    }
+                ]
+            },
+            {
+                "code": "incoming_links",
+                "type": "link",
+                "multiple": true,
+                "readonly": true,
+                "title": "!На этот документ ссылаются",
+                "value": [
+                    {
+                        "code": "RQ-3",
+                        "title": "Регистрация пользователей"
+                    },
+                    {
+                        "code": "SRVC-5",
+                        "title": "newsfeed"
+                    }
+                ]
+            }
+        ],
+        'text': 'Slatus is flexible enough to add **decorators** that can format text based on its content. For example, this editor has **Markdown** preview decorators on it, to make it _dead_ simple to make an editor with built-in Markdown previewing.\n' +
+        '## Try it out!\n' +
+        'Try it out for yourself!'
+    }
+
+    constructor(props) {
+        super(props);
+        //this.state = {
+        //    myparam: props.myparam || '',
+        //};
+    }
+
+    handleClick = (evt) => {
+        var state = this.state;
+        state.options.push({
+            "code": "some_links",
+            "type": "link",
+            "multiple": true,
+            "readonly": true,
+            "title": "Some links",
+            "value": [
+                {
+                    "code": "SQ-3",
+                    "title": "My little link"
+                },
+                {
+                    "code": "FRND-5",
+                    "title": "Friendship is magic!"
+                }
+            ]
+        });
+        this.setState(state);
+        return false;
+    }
 
     render() {
+        const self = this;
         return (
             <div className="app">
                   <nav className="navbar navbar-expand-md bg-primary navbar-dark">
@@ -178,15 +206,67 @@ class App extends React.Component {
                                       </div>
                                       <div className="card-body">
                                           <div className="row">
-                                              <ArtifactFields />
+                                              <table className="table">
+                                                  <thead>
+                                                  <tr>
+                                                      <th>Параметр</th>
+                                                      <th>Значение</th>
+                                                  </tr>
+                                                  </thead>
+                                                  <tbody>
+                                                  {this.state.options.map((object,i)=>{
+                                                      switch(object.type) {
+                                                          case 'integer':
+                                                              return (
+                                                                  <tr>
+                                                                      <td className="">{object.title}</td>
+                                                                      <td>
+                                                                          {object.multiple?(
+                                                                              object.value.map((val,j)=>{
+                                                                                  let field_name = object.code+"[]"
+                                                                                  return (
+                                                                                      <input type="text" name={field_name} className="form-control" placeholder="Enter value" value={val} />
+                                                                                  )
+                                                                              })
+                                                                          ):(
+                                                                              <input type="text" name={object.code} className="form-control" placeholder="Enter value" value={object.value} />
+                                                                          )}
+                                                                      </td>
+                                                                  </tr>
+                                                              )
+                                                          case 'link':
+                                                              return(
+                                                                  <tr>
+                                                                      <td className="">{object.title}</td>
+                                                                      <td>
+                                                                          {object.multiple?(
+                                                                              object.value.map((val,j)=>{
+                                                                                  let field_name = object.code+"[]"
+                                                                                  return (
+                                                                                      <p>
+                                                                                          <a href={val.code}>{val.code} - {val.title}</a>
+                                                                                      </p>
+                                                                                  )
+                                                                              })
+                                                                          ):(
+                                                                              <p>
+                                                                                  <a href={object.value.code}>{object.value.code} - {object.value.title}</a>
+                                                                              </p>
+                                                                          )}
+                                                                      </td>
+                                                                  </tr>
+                                                              )
+                                                      }
+                                                  })}
+                                                  <tr>
+                                                      <td><a href="#" onClick={this.handleClick}>Add new parameter</a></td>
+                                                      <td>&nbsp;</td>
+                                                  </tr>
+                                                  </tbody>
+                                              </table>
                                           </div>
                                           <div className="row">
-                                              <Switch>
-                                                  {EXAMPLES.map(([ name, Component, path, isDev ]) => (
-                                                      <Route key={path} path={path} component={Component} />
-                                                  ))}
-                                                  <Redirect from="/" to="/rich-text" />
-                                              </Switch>
+                                              <RequirementsEdit text={this.state.text} />
                                           </div>
                                       </div>
                                   </div>
@@ -208,7 +288,7 @@ class App extends React.Component {
  * @type {Element} router
  */
 
-const router = <HashRouter><App /></HashRouter>
+const router = <HashRouter><App myparam="someparam" /></HashRouter>
 
 /**
  * Attach `Perf` when not in production.
@@ -218,7 +298,6 @@ const router = <HashRouter><App /></HashRouter>
 if (NODE_ENV != 'production') {
   window.Perf = require('react')
  */
-
 
 const root = document.body.querySelector('main')
 ReactDOM.render(router, root)

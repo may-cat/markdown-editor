@@ -83,6 +83,8 @@ class AppField extends React.Component {
     constructor(props) {
         super(props);
         this.state = props.params;
+        this.state.autocompleteOpen = false;
+        this.state.addVisible = true;
     }
 
     render() {
@@ -124,7 +126,6 @@ class AppField extends React.Component {
             </span>
         )
     }
-
 }
 
 class LinkField extends AppField {
@@ -160,6 +161,7 @@ class LinkField extends AppField {
 
     renderMultipleValue() {
         let self = this;
+
         return (
             <span>
                 Calling renderSingleValue() and drawing delete and add buttons
@@ -174,20 +176,52 @@ class LinkField extends AppField {
                         self.renderSingleValue(data)
                     )
                 })}
-                <span href="#" onClick={self.addNewValue.bind(this)}>Add new</span>
+                {this.state.addVisible?
+                    <p onClick={self.addNewValueStep1.bind(this)}>Add new</p>
+                    :null
+                }
+                {this.state.autocompleteOpen?
+                    <p>
+                        <p>Name:
+                            <input key={this.state.code+"_autocomplete_name"} type="text" onChange={self.addNewValueStepName.bind(this)} />
+                        </p>
+                        <p>Code: <input key={this.state.code+"_autocomplete_code"} type="text"  onChange={self.addNewValueStepCode.bind(this)}/></p>
+                        <p onClick={self.addNewValueStep2.bind(this)}>Submit</p>
+                    </p>
+                    :null
+                }
             </span>
         )
     }
 
-    addNewValue() {
+    addNewValueStep1() {
+        let state = this.state;
+        state.autocompleteOpen = true;
+        state.addVisible = false;
+        state.autocompleteName = '';
+        state.autocompleteCode = '';
+        this.setState(state);
+    }
+
+    addNewValueStepName(event) {
+        this.setState({'autocompleteName':event.target.value})
+    }
+
+    addNewValueStepCode(event) {
+        this.setState({'autocompleteCode':event.target.value})
+    }
+
+    addNewValueStep2() {
         let state = this.state;
         state.value.push({
-            "code": "MurMur",
-            "title": "My little MurMur"
+            "code": state.autocompleteCode,
+            "title": state.autocompleteName
         });
+        state.autocompleteOpen = false;
+        state.addVisible = true;
         this.setState(state);
-        return false;
     }
+
 }
 
 class IntegerField extends AppField {

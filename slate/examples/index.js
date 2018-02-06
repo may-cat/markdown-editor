@@ -78,6 +78,7 @@ class AppField extends React.Component {
         "value": "42"
     };
     */
+    state = {};
 
     constructor(props) {
         super(props);
@@ -173,8 +174,19 @@ class LinkField extends AppField {
                         self.renderSingleValue(data)
                     )
                 })}
+                <span href="#" onClick={self.addNewValue.bind(this)}>Add new</span>
             </span>
         )
+    }
+
+    addNewValue() {
+        let state = this.state;
+        state.value.push({
+            "code": "MurMur",
+            "title": "My little MurMur"
+        });
+        this.setState(state);
+        return false;
     }
 }
 
@@ -289,11 +301,17 @@ class App extends React.Component {
 
     constructor(props) {
         super(props);
+        // @todo: read data from API here
         //this.state = {
         //    myparam: props.myparam || '',
         //};
     }
 
+    /**
+     * @todo: CORRECT THIS
+     * @param evt
+     * @returns {boolean}
+     */
     handleClick = (evt) => {
         var state = this.state;
         state.options.push({

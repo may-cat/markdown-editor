@@ -1,7 +1,6 @@
-
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { HashRouter, NavLink, Route, Redirect, Switch } from 'react-router-dom'
+import {HashRouter, NavLink, Route, Redirect, Switch} from 'react-router-dom'
 
 import CheckLists from './check-lists'
 import CodeHighlighting from './code-highlighting'
@@ -33,7 +32,7 @@ import DevPerformanceRich from './dev/performance-rich'
  * @type {String}
  */
 
-const { NODE_ENV } = process.env
+const {NODE_ENV} = process.env
 
 /**
  * Examples.
@@ -42,30 +41,184 @@ const { NODE_ENV } = process.env
  */
 
 const EXAMPLES = [
-  ['Requirements', RequirementsEdit, '/requirements'],
-  ['Rich Text', RichText, '/rich-text'],
-  ['Plain Text', PlainText, '/plain-text'],
-  ['Hovering Menu', HoveringMenu, '/hovering-menu'],
-  ['Links', Links, '/links'],
-  ['Images', Images, '/images'],
-  ['Embeds', Embeds, '/embeds'],
-  ['Emojis', Emojis, '/emojis'],
-  ['Markdown Preview', MarkdownPreview, '/markdown-preview'],
-  ['Markdown Shortcuts', MarkdownShortcuts, '/markdown-shortcuts'],
-  ['Check Lists', CheckLists, '/check-lists'],
-  ['Code Highlighting', CodeHighlighting, '/code-highlighting'],
-  ['Tables', Tables, '/tables'],
-  ['Paste HTML', PasteHtml, '/paste-html'],
-  ['Read-only', ReadOnly, '/read-only'],
-  ['RTL', RTL, '/rtl'],
-  ['Plugins', Plugins, '/plugins'],
-  ['Iframes', Iframes, '/iframes'],
-  ['Forced Layout', ForcedLayout, '/forced-layout'],
+    ['Requirements', RequirementsEdit, '/requirements'],
+    ['Rich Text', RichText, '/rich-text'],
+    ['Plain Text', PlainText, '/plain-text'],
+    ['Hovering Menu', HoveringMenu, '/hovering-menu'],
+    ['Links', Links, '/links'],
+    ['Images', Images, '/images'],
+    ['Embeds', Embeds, '/embeds'],
+    ['Emojis', Emojis, '/emojis'],
+    ['Markdown Preview', MarkdownPreview, '/markdown-preview'],
+    ['Markdown Shortcuts', MarkdownShortcuts, '/markdown-shortcuts'],
+    ['Check Lists', CheckLists, '/check-lists'],
+    ['Code Highlighting', CodeHighlighting, '/code-highlighting'],
+    ['Tables', Tables, '/tables'],
+    ['Paste HTML', PasteHtml, '/paste-html'],
+    ['Read-only', ReadOnly, '/read-only'],
+    ['RTL', RTL, '/rtl'],
+    ['Plugins', Plugins, '/plugins'],
+    ['Iframes', Iframes, '/iframes'],
+    ['Forced Layout', ForcedLayout, '/forced-layout'],
 
-  ['DEV:Huge', DevHugeDocument, '/dev-huge', true],
-  ['DEV:Plain', DevPerformancePlain, '/dev-performance-plain', true],
-  ['DEV:Rich', DevPerformanceRich, '/dev-performance-rich', true],
-]
+    ['DEV:Huge', DevHugeDocument, '/dev-huge', true],
+    ['DEV:Plain', DevPerformancePlain, '/dev-performance-plain', true],
+    ['DEV:Rich', DevPerformanceRich, '/dev-performance-rich', true],
+];
+
+
+class AppField extends React.Component {
+    /*
+    state = {
+        "code": "my_some_value",
+        "type": "string",
+        "multiple": false,
+        "readonly": false,
+        "title": "Some String Value",
+        "value": "42"
+    };
+    */
+
+    constructor(props) {
+        super(props);
+        this.state = props.params;
+    }
+
+    render() {
+        return (
+            <tr>
+                <td className="">{this.state.title}</td>
+                <td>
+                    {this.state.multiple ? this.renderMultipleValue() : this.renderSingleValue()}
+                </td>
+            </tr>
+        )
+    }
+
+    renderSingleValue(data = {}) {
+        let object = this.state;
+        if ('code' in data)
+            object = data;
+
+        return (
+            <input type="text" name={object.code} className="form-control" placeholder="Enter value"
+                   value={object.value}/>
+        )
+    }
+
+    renderMultipleValue() {
+        let self = this;
+        return (
+            <span>
+                Calling renderSingleValue() and drawing delete and add buttons
+                {this.state.value.map((val, j) => {
+                    let data = {
+                        'field_name': this.state.code + "[]",
+                        'value': val
+                    };
+                    return (
+                        self.renderSingleValue(data)
+                    )
+                })}
+            </span>
+        )
+    }
+
+}
+
+class LinkField extends AppField {
+    /*
+    state = {
+        "code": "responsing",
+        "type": "link",
+        "multiple": true,
+        "readonly": false,
+        "title": "!Ответственный",
+        "value": [
+            {
+                "code": "PPL-12",
+                "title": "Антон Васильев"
+            },
+            {
+                "code": "PPL-24",
+                "title": "Пётр Петрович"
+            }
+        ]
+    };
+    */
+
+    renderSingleValue(data = {}) {
+        let object = this.state;
+        if ('value' in data)
+            object = data;
+
+        return (
+            <p><a href={object.value.code}>{object.value.title}</a></p>
+        )
+    }
+
+    renderMultipleValue() {
+        let self = this;
+        return (
+            <span>
+                Calling renderSingleValue() and drawing delete and add buttons
+                {this.state.value.map((val, j) => {
+                    let data = {
+                        'value': {
+                            'code': val.code,
+                            'title': val.title
+                        }
+                    };
+                    return (
+                        self.renderSingleValue(data)
+                    )
+                })}
+            </span>
+        )
+    }
+}
+
+class IntegerField extends AppField {
+    /*
+    state = {
+        "code": "my_integer_value",
+        "type": "integer",
+        "multiple": false,
+        "readonly": false,
+        "title": "My Integer Value",
+        "value": "42"
+    };
+    */
+
+    renderSingleValue(data = {}) {
+        let object = this.state;
+        if ('code' in data)
+            object = data;
+
+        return (
+            <input type="text" name={object.code} className="form-control" placeholder="Enter value" value={object.value} />
+        )
+    }
+
+    renderMultipleValue() {
+        let self = this;
+        return (
+            <span>
+                Calling renderSingleValue() and drawing delete and add buttons
+                {this.state.value.map((val, j) => {
+                    let data = {
+                        'code': this.state.code + "[]",
+                        'value': val
+                    };
+                    return (
+                        self.renderSingleValue(data)
+                    )
+                })}
+            </span>
+        )
+    }
+}
+
 
 /**
  * App.
@@ -91,7 +244,7 @@ class App extends React.Component {
                 "readonly": false,
                 "title": "chislaz",
                 "value": [
-                    "22","23","24"
+                    "22", "23", "24"
                 ]
             },
             {
@@ -132,7 +285,7 @@ class App extends React.Component {
         'text': 'Slatus is flexible enough to add **decorators** that can format text based on its content. For example, this editor has **Markdown** preview decorators on it, to make it _dead_ simple to make an editor with built-in Markdown previewing.\n' +
         '## Try it out!\n' +
         'Try it out for yourself!'
-    }
+    };
 
     constructor(props) {
         super(props);
@@ -162,120 +315,94 @@ class App extends React.Component {
         });
         this.setState(state);
         return false;
-    }
+    };
 
     render() {
         const self = this;
         return (
             <div className="app">
-                  <nav className="navbar navbar-expand-md bg-primary navbar-dark">
-                      <div className="container">
-                          <a className="navbar-brand" href="#">DocDD</a>
-                          <button className="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbar2SupportedContent" aria-controls="navbar2SupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                              <span className="navbar-toggler-icon"></span>
-                          </button>
-                          <div className="collapse navbar-collapse text-center justify-content-end" id="navbar2SupportedContent">
-                              <ul className="navbar-nav">
-                                  {EXAMPLES.map(([ name, Component, path, isDev ]) => (
-                                      (NODE_ENV != 'production' || !isDev) && (
-                                          <NavLink key={path} to={path} className="nav-item tab nav-link" activeClassName="active">
-                                              <i className="fa d-inline fa-lg fa-bookmark-o"></i>&nbsp;{name}
-                                          </NavLink>
-                                      )
-                                  ))}
-                              </ul>
-                              <a className="btn navbar-btn btn-primary ml-2 text-white"><i className="fa d-inline fa-lg fa-user-circle-o"></i> Sign in</a>
-                          </div>
-                      </div>
-                  </nav>
-                  <div className="py-5">
-                      <div className="container">
-                          <div className="row">
-                              <div className="col-md-12">
-                                  <h1 className="">MOSRU-RQ12 Создание страницы "Новости"</h1>
-                              </div>
-                          </div>
-                          <div className="row">
-                              <div className="col-md-12">
-                                  <div className="card">
-                                      <div className="card-header">
-                                          <div className="row">
-                                              <div className="col-md-10 align-self-center text-right"> Ветка: </div>
-                                              <div className="col-md-2 text-center"><strong> master </strong></div>
-                                          </div>
-                                      </div>
-                                      <div className="card-body">
-                                          <div className="row">
-                                              <table className="table">
-                                                  <thead>
-                                                  <tr>
-                                                      <th>Параметр</th>
-                                                      <th>Значение</th>
-                                                  </tr>
-                                                  </thead>
-                                                  <tbody>
-                                                  {this.state.options.map((object,i)=>{
-                                                      switch(object.type) {
-                                                          case 'integer':
-                                                              return (
-                                                                  <tr>
-                                                                      <td className="">{object.title}</td>
-                                                                      <td>
-                                                                          {object.multiple?(
-                                                                              object.value.map((val,j)=>{
-                                                                                  let field_name = object.code+"[]"
-                                                                                  return (
-                                                                                      <input type="text" name={field_name} className="form-control" placeholder="Enter value" value={val} />
-                                                                                  )
-                                                                              })
-                                                                          ):(
-                                                                              <input type="text" name={object.code} className="form-control" placeholder="Enter value" value={object.value} />
-                                                                          )}
-                                                                      </td>
-                                                                  </tr>
-                                                              )
-                                                          case 'link':
-                                                              return(
-                                                                  <tr>
-                                                                      <td className="">{object.title}</td>
-                                                                      <td>
-                                                                          {object.multiple?(
-                                                                              object.value.map((val,j)=>{
-                                                                                  let field_name = object.code+"[]"
-                                                                                  return (
-                                                                                      <p>
-                                                                                          <a href={val.code}>{val.code} - {val.title}</a>
-                                                                                      </p>
-                                                                                  )
-                                                                              })
-                                                                          ):(
-                                                                              <p>
-                                                                                  <a href={object.value.code}>{object.value.code} - {object.value.title}</a>
-                                                                              </p>
-                                                                          )}
-                                                                      </td>
-                                                                  </tr>
-                                                              )
-                                                      }
-                                                  })}
-                                                  <tr>
-                                                      <td><a href="#" onClick={this.handleClick}>Add new parameter</a></td>
-                                                      <td>&nbsp;</td>
-                                                  </tr>
-                                                  </tbody>
-                                              </table>
-                                          </div>
-                                          <div className="row">
-                                              <RequirementsEdit text={this.state.text} />
-                                          </div>
-                                      </div>
-                                  </div>
-                                  <a className="btn btn-primary btn-lg w-50" href="">Save </a>
-                                  <a className="btn btn-lg w-25 btn-link" href="">Back to list</a>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
+                <nav className="navbar navbar-expand-md bg-primary navbar-dark">
+                    <div className="container">
+                        <a className="navbar-brand" href="#">DocDD</a>
+                        <button className="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+                                data-target="#navbar2SupportedContent" aria-controls="navbar2SupportedContent"
+                                aria-expanded="false" aria-label="Toggle navigation">
+                            <span className="navbar-toggler-icon"></span>
+                        </button>
+                        <div className="collapse navbar-collapse text-center justify-content-end"
+                             id="navbar2SupportedContent">
+                            <ul className="navbar-nav">
+                                {EXAMPLES.map(([name, Component, path, isDev]) => (
+                                    (NODE_ENV != 'production' || !isDev) && (
+                                        <NavLink key={path} to={path} className="nav-item tab nav-link"
+                                                 activeClassName="active">
+                                            <i className="fa d-inline fa-lg fa-bookmark-o"></i>&nbsp;{name}
+                                        </NavLink>
+                                    )
+                                ))}
+                            </ul>
+                            <a className="btn navbar-btn btn-primary ml-2 text-white"><i
+                                className="fa d-inline fa-lg fa-user-circle-o"></i> Sign in</a>
+                        </div>
+                    </div>
+                </nav>
+                <div className="py-5">
+                    <div className="container">
+                        <div className="row">
+                            <div className="col-md-12">
+                                <h1 className="">MOSRU-RQ12 Создание страницы "Новости"</h1>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="col-md-12">
+                                <div className="card">
+                                    <div className="card-header">
+                                        <div className="row">
+                                            <div className="col-md-10 align-self-center text-right"> Ветка:</div>
+                                            <div className="col-md-2 text-center"><strong> master </strong></div>
+                                        </div>
+                                    </div>
+                                    <div className="card-body">
+                                        <div className="row">
+                                            <table className="table">
+                                                <thead>
+                                                <tr>
+                                                    <th>Параметр</th>
+                                                    <th>Значение</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                {this.state.options.map((object, i) => {
+                                                    switch (object.type) {
+                                                        case 'integer':
+                                                            return (
+                                                                <IntegerField params={object}/>
+                                                            );
+                                                        case 'link':
+                                                            return (
+                                                                <LinkField params={object}/>
+                                                            );
+                                                    }
+                                                })}
+                                                <tr>
+                                                    <td><a href="#" onClick={this.handleClick}>Add new parameter</a>
+                                                    </td>
+                                                    <td>&nbsp;</td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div className="row">
+                                            <RequirementsEdit text={this.state.text}/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a className="btn btn-primary btn-lg w-50" href="">Save </a>
+                                <a className="btn btn-lg w-25 btn-link" href="">Back to list</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         )
     }
@@ -288,7 +415,7 @@ class App extends React.Component {
  * @type {Element} router
  */
 
-const router = <HashRouter><App myparam="someparam" /></HashRouter>
+const router = <HashRouter><App myparam="someparam"/></HashRouter>;
 
 /**
  * Attach `Perf` when not in production.
@@ -299,5 +426,5 @@ if (NODE_ENV != 'production') {
   window.Perf = require('react')
  */
 
-const root = document.body.querySelector('main')
-ReactDOM.render(router, root)
+const root = document.body.querySelector('main');
+ReactDOM.render(router, root);

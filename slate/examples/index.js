@@ -98,14 +98,23 @@ class AppField extends React.Component {
         )
     }
 
+    onFieldChange(event) {
+        console.log("any field change event");
+        console.log(event);
+        if (!this.state.multiple) {
+            this.setState({'value': event.target.value})
+        }
+    }
+
     renderSingleValue(data = {}) {
         let object = this.state;
         if ('code' in data)
             object = data;
+        let self = this;
 
         return (
             <input type="text" name={object.code} className="form-control" placeholder="Enter value"
-                   value={object.value}/>
+                   value={object.value} onChange={self.onFieldChange.bind(this)}/>
         )
     }
 
@@ -179,19 +188,21 @@ class LinkField extends AppField {
                         <p>{self.renderSingleValue(data)} &nbsp; <span>[del]</span></p>
                     )
                 })}
-                {this.state.addVisible?
+                {this.state.addVisible ?
                     <p onClick={self.addNewValueStep1.bind(this)}>Add new</p>
-                    :null
+                    : null
                 }
-                {this.state.autocompleteOpen?
+                {this.state.autocompleteOpen ?
                     <p>
                         <p>Name:
-                            <input key={this.state.code+"_autocomplete_name"} type="text" onChange={self.addNewValueStepName.bind(this)} />
+                            <input key={this.state.code + "_autocomplete_name"} type="text"
+                                   onChange={self.addNewValueStepName.bind(this)}/>
                         </p>
-                        <p>Code: <input key={this.state.code+"_autocomplete_code"} type="text"  onChange={self.addNewValueStepCode.bind(this)}/></p>
+                        <p>Code: <input key={this.state.code + "_autocomplete_code"} type="text"
+                                        onChange={self.addNewValueStepCode.bind(this)}/></p>
                         <p onClick={self.addNewValueStep2.bind(this)}>Submit</p>
                     </p>
-                    :null
+                    : null
                 }
             </span>
         )
@@ -213,14 +224,14 @@ class LinkField extends AppField {
      * When name changed - we should update state
      */
     addNewValueStepName(event) {
-        this.setState({'autocompleteName':event.target.value})
+        this.setState({'autocompleteName': event.target.value})
     }
 
     /**
      * When code changed - we should update state
      */
     addNewValueStepCode(event) {
-        this.setState({'autocompleteCode':event.target.value})
+        this.setState({'autocompleteCode': event.target.value})
     }
 
     /**
@@ -256,9 +267,11 @@ class IntegerField extends AppField {
         let object = this.state;
         if ('code' in data)
             object = data;
+        let self = this;
 
         return (
-            <input type="text" name={object.code} className="form-control" placeholder="Enter value" value={object.value} />
+            <input type="text" name={object.code} className="form-control" placeholder="Enter value"
+                   value={object.value} onChange={self.onFieldChange.bind(this)}/>
         )
     }
 
@@ -293,14 +306,11 @@ class App extends React.Component {
 
     constructor(props) {
         super(props);
-        // @todo: read data from API here
-        //this.state = {
-        //    myparam: props.myparam || '',
-        //};
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    componentDidMount(){
-        let url='http://localhost:8080/MOSRU-RQ12.json';
+    componentDidMount() {
+        let url = 'http://localhost:8080/MOSRU-RQ12.json';
 
         fetch(url)
             .then(response => {
@@ -312,13 +322,22 @@ class App extends React.Component {
                 }
             })
             .then(data => this.setState(data))
-            .catch(error => function(){alert('OOOOPS')});
+            .catch(error => function () {
+                alert('OOOOPS')
+            });
+    }
+
+    handleSubmit(event) {
+        console.log("FORM SUBMIT");
+        console.log(this.state);
+        alert('A name was submitted: ');
+        event.preventDefault();
     }
 
     render() {
         if (!("text" in this.state)) {
             return (
-                <span />
+                <span/>
             )
         }
         const self = this;
@@ -357,52 +376,56 @@ class App extends React.Component {
                             </div>
                         </div>
                         <div className="row">
-                            <div className="col-md-12">
-                                <div className="card">
-                                    <div className="card-header">
-                                        <div className="row">
-                                            <div className="col-md-10 align-self-center text-right"> Ветка:</div>
-                                            <div className="col-md-2 text-center"><strong> master </strong></div>
+                            <form onSubmit={this.handleSubmit}>
+                                <div className="col-md-12">
+                                    <div className="card">
+                                        <div className="card-header">
+                                            <div className="row">
+                                                <div className="col-md-10 align-self-center text-right"> Ветка:</div>
+                                                <div className="col-md-2 text-center"><strong> master </strong></div>
+                                            </div>
+                                        </div>
+                                        <div className="card-body">
+                                            <div className="row">
+                                                <table className="table">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>Параметр</th>
+                                                        <th>Значение</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    {this.state.options.map((object, i) => {
+                                                        switch (object.type) {
+                                                            case 'integer':
+                                                                return (
+                                                                    <IntegerField params={object} key={object.code}
+                                                                                  onChange={self.changeFieldInteger.bind(this)}/>
+                                                                );
+                                                            case 'link':
+                                                                return (
+                                                                    <LinkField params={object} key={object.code}/>
+                                                                );
+                                                        }
+                                                    })}
+                                                    <tr>
+                                                        <td><a href="#" onClick={this.handleClick}>Add new parameter</a>
+                                                        </td>
+                                                        <td>&nbsp;</td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div className="row">
+                                                <RequirementsEdit text={this.state.text}
+                                                                  onChange={self.changeText.bind(this)}/>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div className="card-body">
-                                        <div className="row">
-                                            <table className="table">
-                                                <thead>
-                                                <tr>
-                                                    <th>Параметр</th>
-                                                    <th>Значение</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                {this.state.options.map((object, i) => {
-                                                    switch (object.type) {
-                                                        case 'integer':
-                                                            return (
-                                                                <IntegerField params={object}/>
-                                                            );
-                                                        case 'link':
-                                                            return (
-                                                                <LinkField params={object}/>
-                                                            );
-                                                    }
-                                                })}
-                                                <tr>
-                                                    <td><a href="#" onClick={this.handleClick}>Add new parameter</a>
-                                                    </td>
-                                                    <td>&nbsp;</td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                        <div className="row">
-                                            <RequirementsEdit text={this.state.text}/>
-                                        </div>
-                                    </div>
+                                    <input type="submit" className="btn btn-primary btn-lg w-50" value="Submit"/>
+                                    <a className="btn btn-lg w-25 btn-link" href="">Back to list</a>
                                 </div>
-                                <a className="btn btn-primary btn-lg w-50" href="">Save </a>
-                                <a className="btn btn-lg w-25 btn-link" href="">Back to list</a>
-                            </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -410,6 +433,17 @@ class App extends React.Component {
         )
     }
 
+
+    changeText(event) {
+        console.log("change text called");
+        console.log(event);
+        this.setState({'text': event.target.value})
+    }
+
+    changeFieldInteger(event) {
+        console.log("change integer field called");
+        console.log(event);
+    }
 }
 
 /**

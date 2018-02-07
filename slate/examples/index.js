@@ -66,7 +66,11 @@ const EXAMPLES = [
     ['DEV:Rich', DevPerformanceRich, '/dev-performance-rich', true],
 ];
 
-
+/**
+ * Any field should set it's state. It may use method onFieldChange, or define it's own logic.
+ * Any field should send it's value to this.props.onChangeField callback. If you defined your own logic instead this.onFieldChange - you should make this connection there.
+ * Any field should define rendering of single value and of multiple value.
+ */
 class AppField extends React.Component {
     /*
     state = {
@@ -83,8 +87,6 @@ class AppField extends React.Component {
     constructor(props) {
         super(props);
         this.state = props.params;
-        this.state.autocompleteOpen = false;
-        this.state.addVisible = true;
     }
 
     render() {
@@ -102,7 +104,8 @@ class AppField extends React.Component {
         console.log("any field change event");
         console.log(event);
         if (!this.state.multiple) {
-            this.setState({'value': event.target.value})
+            this.setState({'value': event.target.value});
+            this.props.onChangeField(event.target.value);
         }
     }
 
@@ -161,6 +164,12 @@ class LinkField extends AppField {
         ]
     };
     */
+
+    constructor(props) {
+        super(props);
+        this.state.autocompleteOpen = false;
+        this.state.addVisible = true;
+    }
 
     renderSingleValue(data = {}) {
         let object = this.state;
@@ -400,11 +409,11 @@ class App extends React.Component {
                                                             case 'integer':
                                                                 return (
                                                                     <IntegerField params={object} key={object.code}
-                                                                                  onChange={self.changeFieldInteger.bind(this)}/>
+                                                                                  onChangeField={this.changeFieldInteger} />
                                                                 );
                                                             case 'link':
                                                                 return (
-                                                                    <LinkField params={object} key={object.code}/>
+                                                                    <LinkField params={object} key={object.code} onChangeField={this.changeFieldLink}/>
                                                                 );
                                                         }
                                                     })}
@@ -440,9 +449,14 @@ class App extends React.Component {
         this.setState({'text': event.target.value})
     }
 
-    changeFieldInteger(event) {
+    changeFieldInteger(value) {
         console.log("change integer field called");
-        console.log(event);
+        console.log(value);
+    }
+
+    changeFieldLink(value) {
+        console.log("change link field called");
+        console.log(value);
     }
 }
 

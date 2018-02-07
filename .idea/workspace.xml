@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/slate/examples/index.js" line="419" mnemonic="1" />
-    <bookmark url="file://$PROJECT_DIR$/slate/examples/index.js" line="103" mnemonic="2" />
+    <bookmark url="file://$PROJECT_DIR$/slate/examples/index.js" line="411" mnemonic="1" />
+    <bookmark url="file://$PROJECT_DIR$/slate/examples/index.js" line="452" mnemonic="2" />
+    <bookmark url="file://$PROJECT_DIR$/slate/examples/index.js" line="87" mnemonic="3" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="41f5e5f9-e84d-4bd1-9fec-94ee77f0982b" name="Default" comment="" />
@@ -19,8 +20,8 @@
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="FIRST">
-              <first_editor relative-caret-position="425">
-                <caret line="34" column="64" lean-forward="false" selection-start-line="34" selection-start-column="64" selection-end-line="34" selection-end-column="64" />
+              <first_editor relative-caret-position="272">
+                <caret line="31" column="9" lean-forward="false" selection-start-line="31" selection-start-column="9" selection-end-line="31" selection-end-column="9" />
                 <folding />
               </first_editor>
               <second_editor />
@@ -31,8 +32,8 @@
       <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/slate/examples/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="300" column="0" lean-forward="false" selection-start-line="300" selection-start-column="0" selection-end-line="300" selection-end-column="0" />
+            <state relative-caret-position="203">
+              <caret line="107" column="57" lean-forward="true" selection-start-line="107" selection-start-column="57" selection-end-line="107" selection-end-column="57" />
               <folding />
             </state>
           </provider>
@@ -52,12 +53,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>MarkdownPreview</find>
-      <find>PlainText</find>
-      <find>main</find>
-      <find>&lt;br&gt;</find>
-      <find>input</find>
-      <find>style=</find>
       <find>&lt;li</find>
       <find>class=</find>
       <find>class</find>
@@ -80,8 +75,14 @@
       <find>han</find>
       <find>change</find>
       <find>onCha</find>
-      <find>console.log</find>
       <find>onChange</find>
+      <find>console.log</find>
+      <find>autocompleteOpen</find>
+      <find>changeFieldInteger</find>
+      <find>changeFieldLink</find>
+      <find>onChangeField</find>
+      <find>onChangeField</find>
+      <find>change inte</find>
     </findStrings>
     <replaceStrings>
       <replace>&lt;br/&gt;</replace>
@@ -226,12 +227,12 @@
       <workItem from="1517091097069" duration="10909000" />
       <workItem from="1517155658101" duration="6092000" />
       <workItem from="1517908723794" duration="17845000" />
-      <workItem from="1517950059583" duration="6329000" />
+      <workItem from="1517950059583" duration="10502000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="43486000" />
+    <option name="totallyTimeSpent" value="47659000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -689,8 +690,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/slate/examples/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="300" column="0" lean-forward="false" selection-start-line="300" selection-start-column="0" selection-end-line="300" selection-end-column="0" />
+        <state relative-caret-position="203">
+          <caret line="107" column="57" lean-forward="true" selection-start-line="107" selection-start-column="57" selection-end-line="107" selection-end-column="57" />
           <folding />
         </state>
       </provider>
@@ -698,8 +699,8 @@
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="FIRST">
-          <first_editor relative-caret-position="425">
-            <caret line="34" column="64" lean-forward="false" selection-start-line="34" selection-start-column="64" selection-end-line="34" selection-end-column="64" />
+          <first_editor relative-caret-position="272">
+            <caret line="31" column="9" lean-forward="false" selection-start-line="31" selection-start-column="9" selection-end-line="31" selection-end-column="9" />
             <folding />
           </first_editor>
           <second_editor />

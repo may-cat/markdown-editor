@@ -9,11 +9,11 @@
       "value": "22"
     },
     {
-      "code": "chislaz",
+      "code": "numbers",
       "type": "integer",
       "multiple": true,
       "readonly": false,
-      "title": "chislaz",
+      "title": "Numbers",
       "value": [
         "22", "23", "24"
       ]
@@ -23,15 +23,15 @@
       "type": "link",
       "multiple": true,
       "readonly": false,
-      "title": "!Ответственный",
+      "title": "Responsing person",
       "value": [
         {
           "code": "PPL-12",
-          "title": "Антон Васильев"
+          "title": "Anton"
         },
         {
           "code": "PPL-24",
-          "title": "Пётр Петрович"
+          "title": "Peter"
         }
       ]
     },
@@ -40,18 +40,18 @@
       "type": "link",
       "multiple": true,
       "readonly": true,
-      "title": "!На этот документ ссылаются",
+      "title": "Incoming links",
       "value": [
         {
           "code": "RQ-3",
-          "title": "Регистрация пользователей"
+          "title": "User registration"
         },
         {
           "code": "SRVC-5",
-          "title": "newsfeed"
+          "title": "News service"
         }
       ]
     }
   ],
-  "text": "Slatus is flexible enough to add **decorators** that can format text based on its content. For example, this editor has **Markdown** preview decorators on it, to make it _dead_ simple to make an editor with built-in Markdown previewing.\n## Try it out!\nTry it out for yourself!"
+  "text": "Slate is flexible enough to add **decorators** that can format text based on its content. For example, this editor has **Markdown** preview decorators on it, to make it _dead_ simple to make an editor with built-in Markdown previewing.\n## Try it out!\nTry it out for yourself!"
 }

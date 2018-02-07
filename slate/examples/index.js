@@ -90,6 +90,12 @@ class AppField extends React.Component {
         this.onFieldChange = this.onFieldChange.bind(this)
     }
 
+    componentWillReceiveProps(nextProps){
+        if(nextProps.value !== this.props.value){
+            this.setState({count:nextProps.value});
+        }
+    }
+
     render() {
         return (
             <tr>
@@ -112,13 +118,13 @@ class AppField extends React.Component {
         console.log(e.target.attributes['data-code'].value);
         console.log(e.target.value);
         console.log('xx');
-        console.log(this);
+        /*
         this.props.updateData(
             e.target.attributes['data-code'].value,
             e.target.attributes['data-number'].value,
             e.target.value
         );
-
+        */
         if (!this.state.multiple) {
             this.setState({"value": e.target.value});
         } else {
@@ -352,7 +358,7 @@ class App extends React.Component {
     }
 
     componentDidMount() {
-        let url = 'http://localhost:8080/MOSRU-RQ12.json';
+        let url = 'http://localhost:8080/PRJ-RQ12.json';
 
         fetch(url)
             .then(response => {
@@ -382,12 +388,13 @@ class App extends React.Component {
                 <span/>
             )
         }
+        console.log("RENDER OF FORM CALLED");
         const self = this;
         return (
             <div className="app">
                 <nav className="navbar navbar-expand-md bg-primary navbar-dark">
                     <div className="container">
-                        <a className="navbar-brand" href="#">DocDD</a>
+                        <a className="navbar-brand" href="#">Markdown editor</a>
                         <button className="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
                                 data-target="#navbar2SupportedContent" aria-controls="navbar2SupportedContent"
                                 aria-expanded="false" aria-label="Toggle navigation">
@@ -414,7 +421,7 @@ class App extends React.Component {
                     <div className="container">
                         <div className="row">
                             <div className="col-md-12">
-                                <h1 className="">MOSRU-RQ12 Создание страницы "Новости"</h1>
+                                <h1 className="">PRJ-RQ12 Creating news page</h1>
                             </div>
                         </div>
                         <div className="row">
@@ -423,7 +430,7 @@ class App extends React.Component {
                                     <div className="card">
                                         <div className="card-header">
                                             <div className="row">
-                                                <div className="col-md-10 align-self-center text-right"> Ветка:</div>
+                                                <div className="col-md-10 align-self-center text-right"> Branch:</div>
                                                 <div className="col-md-2 text-center"><strong> master </strong></div>
                                             </div>
                                         </div>
@@ -432,8 +439,8 @@ class App extends React.Component {
                                                 <table className="table">
                                                     <thead>
                                                     <tr>
-                                                        <th>Параметр</th>
-                                                        <th>Значение</th>
+                                                        <th>Parameter</th>
+                                                        <th>Value</th>
                                                     </tr>
                                                     </thead>
                                                     <tbody>
@@ -496,14 +503,6 @@ class App extends React.Component {
         console.log(value);
         console.log('this');
         console.log(this);
-        return ;
-        let state = this; /// @TODO: тут какая-то хуйня. Почему-то тут вылезает дочерний компонент. СХУЯЛЛЕ?!?!?!?
-        for (i in state.options) {
-            if (state.options[i].code==field_code) {
-                state.options[i].value = value;
-            }
-        }
-        this.setState(state);
     }
 
     changeFieldLink(field_code, value) {

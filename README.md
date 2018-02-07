@@ -1,10 +1,13 @@
-# Как это заставить работать
+# How to run this thing
 
-- Запускаем сервер
+- Start yarn
 cd ./slate/examples
 yarn run watch
-- Заходим
+- Open
 http://localhost:8080/dev.html#/requirements
+
+
+----
 
 Сейчас используется статика в /slate/examples/
 
@@ -35,6 +38,7 @@ http://localhost:8080/dev.html#/requirements
         - нужно прокинуть вообще все поля в state формы
             + multiple int
             - single int (ПОЧЕМУ-ТО НЕ ПРОКИДЫВАЕТСЯ В ФОРМУ ЗНАЧЕНИЕ ХОТЯ У МУЛЬТИПЛА ПРОКИДЫВАЕТСЯ :( )
+            https://reactjs.org/docs/lifting-state-up.html - тут короче чото есть, но хз непонятно.
             + multiple field
             - single field
             - multiple link

@@ -68,7 +68,7 @@ const EXAMPLES = [
 
 /**
  * Any field should set it's state. It may use method onFieldChange, or define it's own logic.
- * Any field should send it's value to this.props.onChangeField callback. If you defined your own logic instead this.onFieldChange - you should make this connection there.
+ * Any field should send it's value to this.props.updateData callback. If you defined your own logic instead this.onFieldChange - you should make this connection there.
  * Any field should define rendering of single value and of multiple value.
  */
 class AppField extends React.Component {
@@ -87,6 +87,7 @@ class AppField extends React.Component {
     constructor(props) {
         super(props);
         this.state = props.params;
+        this.onFieldChange = this.onFieldChange.bind(this)
     }
 
     render() {
@@ -100,24 +101,30 @@ class AppField extends React.Component {
         )
     }
 
-    onFieldChange(number, event) {
+    onFieldChange(e) {
+        console.log('onFieldChange');
+        //console.log('field_code');
+        //console.log(field_code);
+        //console.log('number');
+        //console.log(number);
+        console.log('e');
+        console.log(e.target.attributes['data-number'].value);
+        console.log(e.target.attributes['data-code'].value);
+        console.log(e.target.value);
+        console.log('xx');
+        console.log(this);
+        this.props.updateData(
+            e.target.attributes['data-code'].value,
+            e.target.attributes['data-number'].value,
+            e.target.value
+        );
+
         if (!this.state.multiple) {
-            console.log("changing non-multiple field");
-            console.log("value");
-            console.log(event.target.value);
-            console.log("number");
-            console.log(number);
-            console.log("STATE BEFORE");
-            console.log(this.state);
-            this.setState({"value": event.target.value});
-            console.log("STATE END");
-            console.log(this.state);
-            this.props.onChangeField(event.target.value);
+            this.setState({"value": e.target.value});
         } else {
             let state = this.state;
-            state.value[number] = event.target.value;
+            state.value[e.target.attributes['data-number'].value] = e.target.value;
             this.setState({"value": state.value});
-            this.props.onChangeField(event.target.value);
         }
     }
 
@@ -128,8 +135,14 @@ class AppField extends React.Component {
         let self = this;
 
         return (
-            <input type="text" className="form-control" placeholder="Enter value"
-                   value={object.value} onChange={self.onFieldChange.bind(this, object.number)}/>
+            <input type="text"
+                   className="form-control"
+                   placeholder="Enter Value"
+                   value={object.value}
+                   onChange={self.onFieldChange}
+                   data-number={object.number?object.number:-1}
+                   data-code={object.code}
+            />
         )
     }
 
@@ -140,7 +153,7 @@ class AppField extends React.Component {
                 Calling renderSingleValue() and drawing delete and add buttons
                 {this.state.value.map((val, j) => {
                     let data = {
-                        'code': this.state.code + "[]",
+                        'code': this.state.code,
                         'number': j,
                         'value': val
                     };
@@ -292,9 +305,15 @@ class IntegerField extends AppField {
         let self = this;
 
         return (
-            <input type="text" className="form-control" placeholder="Enter value"
-                   value={object.value} onChange={self.onFieldChange.bind(this, object.number)}/>
-        )
+            <input type="text"
+                   className="form-control"
+                   placeholder="Enter Walue"
+                   value={object.value}
+                   onChange={self.onFieldChange}
+                   data-number={object.number?object.number:-1}
+                   data-code={object.code}
+            />
+        );
     }
 
     renderMultipleValue() {
@@ -304,7 +323,7 @@ class IntegerField extends AppField {
                 Calling renderSingleValue() and drawing delete and add buttons
                 {this.state.value.map((val, j) => {
                     let data = {
-                        'code': this.state.code + "[]",
+                        'code': this.state.code,
                         'number': j,
                         'value': val
                     };
@@ -422,13 +441,17 @@ class App extends React.Component {
                                                         switch (object.type) {
                                                             case 'integer':
                                                                 return (
-                                                                    <IntegerField params={object} key={object.code}
-                                                                                  onChangeField={this.changeFieldInteger}/>
+                                                                    <IntegerField params={object}
+                                                                                  key={object.code}
+                                                                                  updateData={this.changeFieldInteger}
+                                                                    />
                                                                 );
                                                             case 'link':
                                                                 return (
-                                                                    <LinkField params={object} key={object.code}
-                                                                               onChangeField={this.changeFieldLink}/>
+                                                                    <LinkField params={object}
+                                                                               key={object.code}
+                                                                               updateData={this.changeFieldLink}
+                                                                    />
                                                                 );
                                                         }
                                                     })}
@@ -459,13 +482,32 @@ class App extends React.Component {
 
 
     changeText(event) {
+        console.log('change text');
         this.setState({'text': event.target.value})
     }
 
-    changeFieldInteger(value) {
+    changeFieldInteger(field_code, number, value) {
+        console.log('changeFieldInteger');
+        console.log('field_code');
+        console.log(field_code);
+        console.log('number');
+        console.log(number);
+        console.log('value');
+        console.log(value);
+        console.log('this');
+        console.log(this);
+        return ;
+        let state = this; /// @TODO: тут какая-то хуйня. Почему-то тут вылезает дочерний компонент. СХУЯЛЛЕ?!?!?!?
+        for (i in state.options) {
+            if (state.options[i].code==field_code) {
+                state.options[i].value = value;
+            }
+        }
+        this.setState(state);
     }
 
-    changeFieldLink(value) {
+    changeFieldLink(field_code, value) {
+        console.log('change field link');
     }
 }
 

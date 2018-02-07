@@ -100,12 +100,14 @@ class AppField extends React.Component {
         )
     }
 
-    onFieldChange(event) {
-        console.log("any field change event");
-        console.log(event);
+    onFieldChange(number, event) {
         if (!this.state.multiple) {
             this.setState({'value': event.target.value});
             this.props.onChangeField(event.target.value);
+        } else {
+            let state = this.state;
+            state.value[number] = event.target.value;
+            this.setState({'value': state.value});
         }
     }
 
@@ -117,7 +119,7 @@ class AppField extends React.Component {
 
         return (
             <input type="text" name={object.code} className="form-control" placeholder="Enter value"
-                   value={object.value} onChange={self.onFieldChange.bind(this)}/>
+                   value={object.value} onChange={self.onFieldChange.bind(this, object.number)}/>
         )
     }
 
@@ -128,7 +130,8 @@ class AppField extends React.Component {
                 Calling renderSingleValue() and drawing delete and add buttons
                 {this.state.value.map((val, j) => {
                     let data = {
-                        'field_name': this.state.code + "[]",
+                        'code': this.state.code + "[]",
+                        'number': j,
                         'value': val
                     };
                     return (
@@ -280,7 +283,7 @@ class IntegerField extends AppField {
 
         return (
             <input type="text" name={object.code} className="form-control" placeholder="Enter value"
-                   value={object.value} onChange={self.onFieldChange.bind(this)}/>
+                   value={object.value} onChange={self.onFieldChange.bind(this, object.number)}/>
         )
     }
 
@@ -292,6 +295,7 @@ class IntegerField extends AppField {
                 {this.state.value.map((val, j) => {
                     let data = {
                         'code': this.state.code + "[]",
+                        'number': j,
                         'value': val
                     };
                     return (
@@ -409,11 +413,12 @@ class App extends React.Component {
                                                             case 'integer':
                                                                 return (
                                                                     <IntegerField params={object} key={object.code}
-                                                                                  onChangeField={this.changeFieldInteger} />
+                                                                                  onChangeField={this.changeFieldInteger}/>
                                                                 );
                                                             case 'link':
                                                                 return (
-                                                                    <LinkField params={object} key={object.code} onChangeField={this.changeFieldLink}/>
+                                                                    <LinkField params={object} key={object.code}
+                                                                               onChangeField={this.changeFieldLink}/>
                                                                 );
                                                         }
                                                     })}
@@ -444,19 +449,13 @@ class App extends React.Component {
 
 
     changeText(event) {
-        console.log("change text called");
-        console.log(event);
         this.setState({'text': event.target.value})
     }
 
     changeFieldInteger(value) {
-        console.log("change integer field called");
-        console.log(value);
     }
 
     changeFieldLink(value) {
-        console.log("change link field called");
-        console.log(value);
     }
 }
 

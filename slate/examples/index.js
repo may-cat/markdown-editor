@@ -316,7 +316,7 @@ class IntegerField extends AppField {
                    placeholder="Enter Walue"
                    value={object.value}
                    onChange={self.onFieldChange}
-                   data-number={object.number?object.number:-1}
+                   data-number={typeof object.number != 'undefined'?object.number:-1}
                    data-code={object.code}
             />
         );

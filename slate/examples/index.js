@@ -102,12 +102,22 @@ class AppField extends React.Component {
 
     onFieldChange(number, event) {
         if (!this.state.multiple) {
-            this.setState({'value': event.target.value});
+            console.log("changing non-multiple field");
+            console.log("value");
+            console.log(event.target.value);
+            console.log("number");
+            console.log(number);
+            console.log("STATE BEFORE");
+            console.log(this.state);
+            this.setState({"value": event.target.value});
+            console.log("STATE END");
+            console.log(this.state);
             this.props.onChangeField(event.target.value);
         } else {
             let state = this.state;
             state.value[number] = event.target.value;
-            this.setState({'value': state.value});
+            this.setState({"value": state.value});
+            this.props.onChangeField(event.target.value);
         }
     }
 
@@ -118,7 +128,7 @@ class AppField extends React.Component {
         let self = this;
 
         return (
-            <input type="text" name={object.code} className="form-control" placeholder="Enter value"
+            <input type="text" className="form-control" placeholder="Enter value"
                    value={object.value} onChange={self.onFieldChange.bind(this, object.number)}/>
         )
     }
@@ -282,7 +292,7 @@ class IntegerField extends AppField {
         let self = this;
 
         return (
-            <input type="text" name={object.code} className="form-control" placeholder="Enter value"
+            <input type="text" className="form-control" placeholder="Enter value"
                    value={object.value} onChange={self.onFieldChange.bind(this, object.number)}/>
         )
     }

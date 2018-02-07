@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/slate/examples/index.js" line="121" mnemonic="2" />
-    <bookmark url="file://$PROJECT_DIR$/slate/examples/index.js" line="285" mnemonic="3" />
+    <bookmark url="file://$PROJECT_DIR$/slate/examples/index.js" line="131" mnemonic="2" />
+    <bookmark url="file://$PROJECT_DIR$/slate/examples/index.js" line="295" mnemonic="3" />
     <bookmark url="file://$PROJECT_DIR$/slate/examples/index.js" line="102" mnemonic="1" />
   </component>
   <component name="ChangeListManager">
@@ -20,8 +20,8 @@
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="FIRST">
-              <first_editor relative-caret-position="306">
-                <caret line="33" column="409" lean-forward="true" selection-start-line="33" selection-start-column="15" selection-end-line="33" selection-end-column="409" />
+              <first_editor relative-caret-position="374">
+                <caret line="37" column="13" lean-forward="false" selection-start-line="37" selection-start-column="13" selection-end-line="37" selection-end-column="13" />
                 <folding />
               </first_editor>
               <second_editor />
@@ -32,8 +32,8 @@
       <file leaf-file-name="index.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/slate/examples/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="339">
-              <caret line="352" column="23" lean-forward="true" selection-start-line="352" selection-start-column="23" selection-end-line="352" selection-end-column="23" />
+            <state relative-caret-position="364">
+              <caret line="111" column="41" lean-forward="false" selection-start-line="111" selection-start-column="36" selection-end-line="111" selection-end-column="41" />
               <folding>
                 <element signature="n#LinkField#0" expanded="false" />
               </folding>
@@ -229,12 +229,12 @@
       <workItem from="1517091097069" duration="10909000" />
       <workItem from="1517155658101" duration="6092000" />
       <workItem from="1517908723794" duration="17845000" />
-      <workItem from="1517950059583" duration="14530000" />
+      <workItem from="1517950059583" duration="16360000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="51687000" />
+    <option name="totallyTimeSpent" value="53517000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -302,7 +302,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="7" />
+      <option name="time" value="8" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -433,14 +433,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="187">
           <caret line="11" column="67" lean-forward="false" selection-start-line="11" selection-start-column="67" selection-end-line="11" selection-end-column="67" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/slate/examples/build.dev.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -699,18 +691,26 @@
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="FIRST">
-          <first_editor relative-caret-position="306">
-            <caret line="33" column="409" lean-forward="true" selection-start-line="33" selection-start-column="15" selection-end-line="33" selection-end-column="409" />
+          <first_editor relative-caret-position="374">
+            <caret line="37" column="13" lean-forward="false" selection-start-line="37" selection-start-column="13" selection-end-line="37" selection-end-column="13" />
             <folding />
           </first_editor>
           <second_editor />
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/slate/examples/build.dev.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="4131" column="72" lean-forward="false" selection-start-line="4131" selection-start-column="72" selection-end-line="4131" selection-end-column="72" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/slate/examples/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="339">
-          <caret line="352" column="23" lean-forward="true" selection-start-line="352" selection-start-column="23" selection-end-line="352" selection-end-column="23" />
+        <state relative-caret-position="364">
+          <caret line="111" column="41" lean-forward="false" selection-start-line="111" selection-start-column="36" selection-end-line="111" selection-end-column="41" />
           <folding>
             <element signature="n#LinkField#0" expanded="false" />
           </folding>
